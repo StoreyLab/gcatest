@@ -18,6 +18,6 @@ Example
 
 ```R
 library(gcat)
-LF=lfa(sim_geno, 3)
-gcat_p=gcat(sim_geno, LF, sim_trait)
+LF = lfa(sim_geno, 3)
+gcat_p = gcat(sim_geno, LF, sim_trait)
 ```
