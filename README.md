@@ -22,7 +22,13 @@ LF = lfa(sim_geno, 3)
 gcat_p = gcat(sim_geno, LF, sim_trait)
 ```
 
-The example is available in PLINK format at [URL PENDING]. The package `lfa` has the function `read.bed`. Example:
+The example is available in PLINK format at:
+
+* http://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.bed
+* http://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.bim
+* http://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.fam
+
+The package `lfa` has the function `read.bed`. Example:
 
 ```R
 library(gcat)
