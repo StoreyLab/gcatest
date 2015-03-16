@@ -4,7 +4,7 @@ gcat
 
 genotype conditional association test
 
-Pre-print available soon.
+Pre-print available: http://biorxiv.org/content/early/2015/03/04/012682
 
 Dependencies
 ===
