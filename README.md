@@ -17,11 +17,12 @@ Installation
 ===
 
 To install, open R and type:
-
-    install.packages("devtools")
-    library("devtools")
-    install_github("Storeylab/lfa")
-    install_github("Storeylab/gcat")
+```R
+install.packages("devtools")
+library("devtools")
+install_github("Storeylab/lfa")
+install_github("Storeylab/gcat")
+```
 
 Example
 ===
