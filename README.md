@@ -11,7 +11,7 @@ Published manuscript available:  http://www.nature.com/ng/journal/vaop/ncurrent/
 Dependencies
 ===
 
-`gcat` requires the package `lfa` which is available at https://github.com/StoreyLab/lfa
+`gcat` requires the package `lfa` which is available at https://github.com/StoreyLab/lfa.  Apple OS X users with installation problems should read FAQ on `lfa` page.
 
 Installation
 ===
@@ -19,7 +19,7 @@ Installation
 To install, open R and type:
 
     install.packages("devtools")
-    library('"devtools")
+    library("devtools")
     install_github("Storeylab/lfa")
     install_github("Storeylab/gcat")
 
