@@ -50,3 +50,21 @@ sim_trait = read.table("sim_geno.fam")[,6]
 LF = lfa(sim_geno, 3)
 gcat_p = gcat(sim_geno, LF, sim_trait)
 ```
+
+Checking genotype model fit
+===
+
+The main assumption that needs to verified on real data before using GCAT is that the probabilistic model of population structure fits the genotype data well.  Note that this verification does not involve the trait model, which is an important and positive aspect of GCAT.  The function `model.gof` returns a p-value for each SNP based on simulating a null distribution for the population structure model. The lower the p-value is for a given SNP, the worse the model fits that particular SNP.  Statistically significant p-values tell us which SNPs the model fails for, and those SNPs should be filtered out if necessary before using the GCAT test.  We can also adjust the value of `d` (which is the number of logistic factors included in the population structure model) to try to maximize the number of SNPs that are included in the GCAT analysis. In the example simulated data set, the last five SNPs are simulated to violate the model.
+
+```R
+set.seed(1234)
+library(gcat)
+sim_geno = read.bed(bed.prefix="sim_geno")
+LF = lfa(sim_geno, 3)
+gof = model.gof(sim_geno, LF, B=2)
+filtered = gof < (1 / nrow(sim_geno))
+sim_geno = sim_geno[!filtered,]
+
+LF = lfa(sim_geno, 3)
+gcat_p = gcat(sim_geno, LF, sim_trait)
+```
