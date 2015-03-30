@@ -13,6 +13,16 @@ Dependencies
 
 `gcat` requires the package `lfa` which is available at https://github.com/StoreyLab/lfa
 
+Installation
+===
+
+To install, open R and type:
+
+    install.packages("devtools")
+    library('"devtools")
+    install_github("Storeylab/lfa")
+    install_github("Storeylab/gcat")
+
 Example
 ===
 
