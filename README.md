@@ -6,6 +6,8 @@ genotype conditional association test
 
 Pre-print available: http://biorxiv.org/content/early/2015/03/04/012682
 
+Published manuscript available:  http://www.nature.com/ng/journal/vaop/ncurrent/full/ng.3244.html
+
 Dependencies
 ===
 
