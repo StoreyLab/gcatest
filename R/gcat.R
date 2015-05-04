@@ -39,8 +39,42 @@ gcat.stat <- function(X, LF, trait, adjustment=NULL){
         LF = cbind(LF, adjustment)
     }
     
-    LF = rbind(LF, LF)
-    LF = cbind(LF, trait) #don't forget LFs include intercept
-    devdiff = .Call("assoc", LF, X, 10, 1E-6)
-    return(devdiff)
+    #no missing values
+    if(sum(is.na(X)) == 0){
+        LF = rbind(LF, LF)
+        LF = cbind(LF, trait) #don't forget LFs include intercept
+        devdiff = .Call("assoc", LF, X, 10, 1E-6)
+        return(devdiff)
+    } else{ #missing values
+        devdiff = apply(X, 1, assoc_snp_na, LF, trait)
+    }
+    
+    
+}
+
+assoc_snp_na = function(snp, LF, trait){
+    ind = !is.na(snp) #logical index vector
+    snp_no_na = snp[ind]
+    LF_no_na = LF[ind,]
+    #if(is.matrix(trait)){
+    #    trait_no_na = trait[ind,]
+    #} else{
+        trait_no_na = trait[ind]
+    #}
+    
+    b0 = lfa:::lreg(snp_no_na, LF_no_na)
+    b1 = lfa:::lreg(snp_no_na, cbind(LF_no_na, trait_no_na))
+    
+    #est0 = .Call("mv", LF_no_na, b0)
+    est0 = LF_no_na %*% b0
+    #est1 = .Call("mv", cbind(LF_no_na, trait_no_na), b1)
+    est1 = cbind(LF_no_na, trait_no_na) %*% b1
+    
+    p0 = exp(est0)/(1+exp(est0))
+    p1 = exp(est1)/(1+exp(est1))
+    
+    devalt  = sum(snp_no_na*log(p1) + (2-snp_no_na)*log(1-p1))
+    devnull = sum(snp_no_na*log(p0) + (2-snp_no_na)*log(1-p0))
+    
+    -2*(devnull-devalt)
 }
