@@ -28,7 +28,9 @@ gcat.stat <- function(X, LF, trait, adjustment=NULL){
     if(length(trait) != ncol(X))
         stop("trait vector and genotype matrix columns must be same")
     
-    #check LFs
+    #check trait for missing values
+    if(sum(complete.cases(trait) != length(trait)))
+        stop("NAs in trait")
     
     #check adjustment var
     if(!is.null(adjustment)){
