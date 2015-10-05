@@ -8,14 +8,22 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 
-#' @title Genotype conditional association test
+#' @title Genotype Conditional Association TEST
 #' @description Performs the GCAT test for association between SNPs
 #' and trait, and returns the p-values.
 #' @inheritParams lfa::lfa
+#' @param LF matrix of logistic factors outputed from function \code{lfa}
 #' @param trait vector 
 #' @param adjustment matrix of adjustment variables
+#' @references Song, M, Hao, W, Storey, JD (2015). Testing for genetic associations in arbitrarily structured populations. Nat. Genet., 47, 5:550-4.
+#' @examples
+#' library(lfa)
+#' LF = lfa(sim_geno, 3)
+#' gcat_p = gcat(sim_geno, LF, sim_trait)
+#' @return vector of p-values 
 #' @export
-#' @useDynLib gcat
+#' @import lfa
+#' @useDynLib gcatest
 gcat <- function(X, LF, trait, adjustment=NULL){
     devdiff = gcat.stat(X, LF, trait, adjustment)
     
@@ -29,7 +37,7 @@ gcat.stat <- function(X, LF, trait, adjustment=NULL){
         stop("trait vector and genotype matrix columns must be same")
     
     #check trait for missing values
-    if(sum(complete.cases(trait) != length(trait)))
+    if(sum(complete.cases(trait)) != length(trait))
         stop("NAs in trait")
     
     #check adjustment var

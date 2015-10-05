@@ -29,7 +29,8 @@
 
 \section{Introduction}
 
-Genotype Conditional Association Test (GCAT)~\cite{Song2014} is a test for genetic association that is powered by Logistic Factor Analysis (LFA)~\cite{Hao2013}. 
+The \texttt{gcatest} package provides an implementation of the Genotype Conditional Association Test (GCAT)~\cite{Song2015}.
+GCAT is a test for genetic association that is powered by Logistic Factor Analysis (LFA)~\cite{Hao2013}. 
 LFA is a method of modeling population structure in a genome wide association study. GCAT performs a test for association between each SNP and a trait (either quantitative or binary).
 We have shown that GCAT is robust to confounding from population structure.
 
@@ -38,10 +39,11 @@ We have shown that GCAT is robust to confounding from population structure.
 We include a sample dataset with the package. \texttt{sim\_geno} is a simulated genotype matrix. \texttt{sim\_trait} is a simulated trait. 
 There are 10,000 SNPs and 1,000 individuals. The first five SNPs are associated with the trait. 
 This simulations were done under the Pritchard-Stephens-Donnelly model with $K=3$, with Dirichlet parameter $\alpha=0.1$ and variance allotment in the trait corresponding to $5\%$ genetic, $5\%$ environmental, and $90\%$ noise. 
-This dataset is simulated under identical parameters as the PSD simulation in Figure 2 of the paper~\cite{Song2014}, except that we have adjusted the size of the simulation to be appropriate for a small demo.
+This dataset is simulated under identical parameters as the PSD simulation in Figure 2 of the paper~\cite{Song2015}, except that we have adjusted the size of the simulation to be appropriate for a small demo.
 
 <<preamble,warning=F>>=
-library(gcat)
+library(lfa)
+library(gcatest)
 dim(sim_geno)
 length(sim_trait)
 @
@@ -77,12 +79,8 @@ ggplot(dat, aes(gcat_p, ..density..)) + geom_histogram(binwidth=1/20) + theme_bw
 @
 
 \bibliographystyle{plain}
-\bibliography{gcat}
+\bibliography{gcatest}
 
 \end{document}
 
 
-
-
-%alpha 0.1
-%5 5 90
