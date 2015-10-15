@@ -1,9 +1,9 @@
 Package: gcatest
 Title: Genotype Conditional Association TEST
-Version: 0.99.3
-Date: 2015-10-04
-Author: Wei Hao, Minsun Song, John Storey
-Maintainer: Wei Hao <whao@princeton.edu>, John Storey <jstorey@princeton.edu>
+Version: 1.1.1
+Date: 2015-10-09
+Author: Wei Hao, Minsun Song, John D. Storey
+Maintainer: Wei Hao <whao@princeton.edu>, John D. Storey <jstorey@princeton.edu>
 LazyData: true
 Description: GCAT is an association test for genome wide association studies
     that controls for population structure under a general class of trait.

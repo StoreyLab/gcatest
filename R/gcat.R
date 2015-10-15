@@ -30,8 +30,15 @@ gcat <- function(X, LF, trait, adjustment=NULL){
     return(pchisq(devdiff, 1, lower.tail=FALSE))
 }
 
+#' @describeIn gcat
+#' @export
+gcatest <- gcat
+
 #' @describeIn gcat returns the association statistics instead of the 
 #' p-value.
+#' @examples
+#' gcat_stat = gcat.stat(sim_geno, LF, sim_trait)
+#' @export
 gcat.stat <- function(X, LF, trait, adjustment=NULL){
     if(length(trait) != ncol(X))
         stop("trait vector and genotype matrix columns must be same")

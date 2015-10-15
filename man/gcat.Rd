@@ -3,9 +3,12 @@
 \name{gcat}
 \alias{gcat}
 \alias{gcat.stat}
+\alias{gcatest}
 \title{Genotype Conditional Association TEST}
 \usage{
 gcat(X, LF, trait, adjustment = NULL)
+
+gcatest(X, LF, trait, adjustment = NULL)
 
 gcat.stat(X, LF, trait, adjustment = NULL)
 }
@@ -29,6 +32,8 @@ and trait, and returns the p-values.
 }
 \section{Functions}{
 \itemize{
+\item \code{gcatest}: 
+
 \item \code{gcat.stat}: returns the association statistics instead of the
 p-value.
 }}
@@ -36,6 +41,7 @@ p-value.
 library(lfa)
 LF = lfa(sim_geno, 3)
 gcat_p = gcat(sim_geno, LF, sim_trait)
+gcat_stat = gcat.stat(sim_geno, LF, sim_trait)
 }
 \references{
 Song, M, Hao, W, Storey, JD (2015). Testing for genetic associations in arbitrarily structured populations. Nat. Genet., 47, 5:550-4.

@@ -21,7 +21,7 @@
 \usepackage{subfig}
 
 \title{Genotype Conditional Association Test Vignette}
-\author{Wei Hao, Minsun Song, John Storey}
+\author{Wei Hao, Minsun Song, John D. Storey}
 \date{\today}
 
 \begin{document}
