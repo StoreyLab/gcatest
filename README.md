@@ -2,7 +2,7 @@ GCAT (genotype conditional association test)
 gcatest
 ===
 
-genotype conditional association test
+`gcatest` implements the genotype conditional association test (GCAT).
 
 Pre-print available: http://biorxiv.org/content/early/2015/03/04/012682
 
