@@ -1,6 +1,6 @@
 Package: gcatest
 Title: Genotype Conditional Association TEST
-Version: 1.1.1
+Version: 1.3.2
 Date: 2015-10-09
 Author: Wei Hao, Minsun Song, John D. Storey
 Maintainer: Wei Hao <whao@princeton.edu>, John D. Storey <jstorey@princeton.edu>

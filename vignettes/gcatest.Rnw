@@ -78,6 +78,10 @@ colnames(dat) = "gcat_p"
 ggplot(dat, aes(gcat_p, ..density..)) + geom_histogram(binwidth=1/20) + theme_bw()
 @
 
+\section{Data Input}
+
+The \texttt{lfa} package provides the function \texttt{read.bed} for parsing PLINK binary genotypes (extension: \texttt{.bed}) into an R object of the format needed for the \texttt{gcat} function.
+
 \bibliographystyle{plain}
 \bibliography{gcatest}
 
