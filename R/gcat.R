@@ -11,7 +11,7 @@
 #' @title Genotype Conditional Association TEST
 #' @description Performs the GCAT test for association between SNPs and trait, and returns the p-values.
 #' @inheritParams lfa::lfa
-#' @param LF matrix of logistic factors outputed from function \code{lfa}
+#' @param LF matrix of logistic factors outputed from function [lfa::lfa()]
 #' @param trait vector 
 #' @param adjustment matrix of adjustment variables
 #' @references Song, M, Hao, W, Storey, JD (2015). Testing for genetic associations in arbitrarily structured populations. Nat. Genet., 47, 5:550-4.

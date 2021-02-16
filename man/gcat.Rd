@@ -18,7 +18,7 @@ gcat.stat(X, LF, trait, adjustment = NULL)
 BEDMatrix is supported.
 Sparse matrices of class Matrix are not supported (yet).}
 
-\item{LF}{matrix of logistic factors outputed from function \code{lfa}}
+\item{LF}{matrix of logistic factors outputed from function \code{\link[lfa:lfa]{lfa::lfa()}}}
 
 \item{trait}{vector}
 

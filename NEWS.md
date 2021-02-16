@@ -23,3 +23,10 @@ Internally there was major code restructuring, and added unit tests for all func
     - Was entirely redundant with `lfa::af_snp`, which is now called in all cases instead.
 	- Had bugs concerning handling of p == 0 or 1 cases that are better handled in `assoc_snp` R code
   - Minor scattered changes solely to pass latest `R CMD check` requirements.
+
+# 2021-02-16 - gcatest 2.0.1.9000
+
+* Documentation updates:
+  - Fixed links to functions, in many cases these were broken because of incompatible mixed Rd and markdown syntax (now markdown is used more fully).
+
+
