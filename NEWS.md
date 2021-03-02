@@ -29,4 +29,8 @@ Internally there was major code restructuring, and added unit tests for all func
 * Documentation updates:
   - Fixed links to functions, in many cases these were broken because of incompatible mixed Rd and markdown syntax (now markdown is used more fully).
 
+# 2021-03-01 - gcatest 2.0.2.9000
 
+- Added internal tests for deviance calculations against `stats::glm`.
+- Deviance code (internal `delta_deviance_snp`) now returns `NA` instead of stopping when an "impossible" case is encountered (when the genotype `x` is non-zero but the fitted probabilities under either null or alternative model are zero, or the alternative allele dosage (`x-2`) has the same problem).
+  These cases are clearly model fitting failures, and can arise for common ill-defined problems, particularly under binary `adjustment` variables passed to `gcat` together with rare variants; these individual cases are not handled any better by `stats:glm`, so it seemed most sensible to return `NA` at such loci and not stop.

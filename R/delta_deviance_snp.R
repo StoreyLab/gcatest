@@ -1,4 +1,5 @@
 # combined calculation of both deviances to maximize numerical accuracy (this is more stable than calculating them separately and then calculating the difference)
+# handles some cases where model fit is poor by assuming that pi1 should fit the data better than pi0
 delta_deviance_snp <- function( xi, pi0, pi1 ) {
     if ( missing( xi ) )
         stop( 'Genotype vector `xi` is required!' )
@@ -90,32 +91,15 @@ delta_deviance_snp <- function( xi, pi0, pi1 ) {
 
     # In all cases we exclude terms of the form 0 * log( 0 ), which in the limit equal 0 (lim_{p -> 0} p*log(p) = 0)
     # however, we do get pi estimates can be at the "boundaries", particularly at 1, due to how `lfa::af_snp` solves one of the numerical issues, so these must be excluded explicitly, otherwise R sets the whole thing to NA
-    # sadly these cases occur in toy simulations, let's just cap so real values are always returned
-    p_min_sample <- 1 / (2 * length(xi) )
     
     # first this sum of terms: xi * log( pi1/pi0 )
     # only xi != 0 contribute to sum, but first let's also check that the included values don't have any pi1 == 0 or pi0 == 0, if those two don't happen we're good!
+    # NOTE: when those cases do occur, a bad fit is certainly to blame (probably an ill-defined problem, bad design matrix or other issues).  GLM sucks at these too.  Let's just not die and return NA
     indexes <- xi != 0L
-    if ( any( pi0[indexes] == 0 ) ) {
-        # stop( 'Observed impossible case `p0 = 0` and `x != 0`!' )
-        # stats
-        indexes2 <- pi0[indexes] == 0
-        n0 <- sum( indexes2 )
-        l0 <- length( indexes2 )
-        # get non-zero minimum
-        p_min_nz <- min( pi0[ pi0 > 0 ] )
-        stop( 'pi0[ xi != 0L ] had zeroes: ', n0, '/', l0, ', p_min_sample: ', p_min_sample, ', p_min_nz: ', p_min_nz, "\n", 'xi: ', toString(xi), "\n", 'pi0: ', toString( pi0 ), "\n", 'pi1: ', toString( pi1 ) )
-    }
-    if ( any( pi1[indexes] == 0 ) ) {
-        # stop( 'Observed impossible case `p1 = 0` and `x != 0`!' )
-        # stats
-        indexes2 <- pi1[indexes] == 0
-        n0 <- sum( indexes2 )
-        l0 <- length( indexes2 )
-        # get non-zero minimum
-        p_min_nz <- min( pi1[ pi1 > 0 ] )
-        stop( 'pi1[ xi != 0L ] had zeroes: ', n0, '/', l0, ', p_min_sample: ', p_min_sample, ', p_min_nz: ', p_min_nz, "\n", 'xi: ', toString(xi), "\n", 'pi0: ', toString( pi0 ), "\n", 'pi1: ', toString( pi1 ) )
-    }
+    if ( any( pi0[indexes] == 0 ) )
+        return ( NA )
+    if ( any( pi1[indexes] == 0 ) )
+        return ( NA )
     # what is left we are good to sum
     devdiff <- sum( xi[ indexes ] * log( pi1[ indexes ] / pi0[ indexes ] ) )
     
@@ -123,26 +107,10 @@ delta_deviance_snp <- function( xi, pi0, pi1 ) {
     # the check is the same but "reflected"
     # only xi != 2 contribute to sum, but first let's also check that the included values don't have any pi1 == 1 or pi0 == 1, if those two don't happen we're good!
     indexes <- xi != 2L
-    if ( any( pi0[indexes] == 1 ) ) {
-        # stop( 'Observed impossible case `p0 = 1` and `x != 2`!' )
-        # stats
-        indexes2 <- pi0[indexes] == 1
-        n1 <- sum( indexes2 )
-        l1 <- length( indexes2 )
-        # get non-one maximum
-        p_max_no <- max( pi0[ pi0 < 1 ] )
-        stop( 'pi0[ xi != 0L ] had ones: ', n1, '/', l1, ', p_max_sample: ', 1 - p_min_sample, ', p_max_no: ', p_max_no, "\n", 'xi: ', toString(xi), "\n", 'pi0: ', toString( pi0 ), "\n", 'pi1: ', toString( pi1 ) )
-    }
-    if ( any( pi1[indexes] == 1 ) ) {
-        # stop( 'Observed impossible case `p1 = 1` and `x != 2`!' )
-        # stats
-        indexes2 <- pi1[indexes] == 1
-        n1 <- sum( indexes2 )
-        l1 <- length( indexes2 )
-        # get non-one maximum
-        p_max_no <- max( pi1[ pi1 < 1 ] )
-        stop( 'pi1[ xi != 0L ] had ones: ', n1, '/', l1, ', p_max_sample: ', 1 - p_min_sample, ', p_max_no: ', p_max_no, "\n", 'xi: ', toString(xi), "\n", 'pi0: ', toString( pi0 ), "\n", 'pi1: ', toString( pi1 ) )
-    }
+    if ( any( pi0[indexes] == 1 ) )
+        return ( NA )
+    if ( any( pi1[indexes] == 1 ) )
+        return ( NA )
     # what is left we are good to sum
     devdiff <- devdiff + sum( ( 2L - xi[ indexes ]) * log( ( 1 - pi1[ indexes ]) / ( 1 - pi0[ indexes ] ) ) )
     
