@@ -169,11 +169,12 @@ test_that( "delta_deviance_snp works", {
     expect_true( is.na( delta_deviance_snp( xi, pi, pi_bad2 ) ) )
 })
 
-test_that("assoc_snp works", {
+test_that("delta_deviance_snp_lf works", {
     # test a single SNP
     i <- 1
+    LF1 <- cbind(LFs, trait)
     expect_silent(
-        devdiff <- assoc_snp( X[ i, ] , LFs, trait )
+        devdiff <- delta_deviance_snp_lf( X[ i, ] , LFs, LF1 )
     )
     expect_equal( length( devdiff ), 1 )
     expect_true( is.numeric( devdiff ) )
@@ -185,6 +186,28 @@ test_that("assoc_snp works", {
     suppressWarnings(
         devdiff_glm <- delta_deviance_snp_glm( X[ i, ], LFs, trait )
     )
+    expect_equal( devdiff, devdiff_glm )
+})
+
+test_that("delta_deviance_lf works", {
+    LF1 <- cbind(LFs, trait)
+    expect_silent(
+        devdiff <- delta_deviance_lf( X , LFs, LF1 )
+    )
+    expect_equal( length( devdiff ), m_loci )
+    expect_true( is.numeric( devdiff ) )
+    # delta deviances can be NA if LFA/glm.fit fail to converge
+    expect_true( !any( is.na( devdiff ) ) )
+    # theoretically this is true, but in practice it depends on LFA fitting these models well, so testing this is not appropriate here (fails sometimes)
+    ## expect_true( all( devdiff >= 0 ) )
+    
+    # loop through `glm` version
+    devdiff_glm <- vector( 'numeric', m_loci )
+    for ( i in 1 : m_loci ) {
+        suppressWarnings(
+            devdiff_glm[i] <- delta_deviance_snp_glm( X[ i, ], LFs, trait )
+        )
+    }
     expect_equal( devdiff, devdiff_glm )
 })
 
@@ -252,6 +275,15 @@ if (
 
     # load as a BEDMatrix object
     X_BEDMatrix <- suppressMessages(suppressWarnings( BEDMatrix( file_bed ) ))
+
+    test_that("delta_deviance_lf works with BEDMatrix", {
+        LF1 <- cbind( LFs, trait )
+        devdiff_basic <- delta_deviance_lf( X, LFs, LF1 )
+        expect_silent(
+            devdiff_BM <- delta_deviance_lf( X_BEDMatrix, LFs, LF1 )
+        )
+        expect_equal( devdiff_basic, devdiff_BM )
+    })
 
     test_that("gcat.stat works with BEDMatrix", {
         devdiff_basic <- gcat.stat( X, LFs, trait )

@@ -11,21 +11,13 @@ gcat.stat <- function( X, LF, trait, adjustment = NULL ){
     if ( missing( trait ) )
         stop( "`trait` is required!" )
     
-    # check class
-    is_BEDMatrix <- FALSE
+    # check class, get dimensions
     if ( "BEDMatrix" %in% class(X) ) {
-        is_BEDMatrix <- TRUE
-    } else if ( !is.matrix( X ) )
-        stop( '`X` must be a matrix!' )
-
-    # get dimensions
-    if ( is_BEDMatrix ) {
-        m <- ncol(X)
         n <- nrow(X)
-    } else {
+    } else if ( is.matrix( X ) ) {
         n <- ncol(X)
-        # m not used in this case
-    }
+    } else 
+        stop( '`X` must be a matrix!' )
 
     # check dimensions
     if ( nrow(LF) != n )
@@ -48,18 +40,14 @@ gcat.stat <- function( X, LF, trait, adjustment = NULL ){
         # if all good, add adjustments to LFs
         LF <- cbind( LF, adjustment )
     }
+
+    # bind matrices
+    LF1 <- cbind(LF, trait)
+
+    # this performs the calculations in a broader setting
+    # (shared with `jackstraw` package)
+    devdiff <- delta_deviance_lf( X, LF, LF1 )
     
-    if ( is_BEDMatrix ) {
-        # explicit loop for BEDMatrix
-        devdiff <- vector('numeric', m)
-        for ( i in 1 : m ) {
-            # get locus i genotype vector
-            xi <- X[ , i ]
-            # calculate and store result
-            devdiff[ i ] <- assoc_snp( xi, LF, trait )
-        }
-    } else
-        devdiff <- apply( X, 1, assoc_snp, LF, trait )
     return( devdiff )
 }
 

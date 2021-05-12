@@ -33,4 +33,11 @@ Internally there was major code restructuring, and added unit tests for all func
 
 - Added internal tests for deviance calculations against `stats::glm`.
 - Deviance code (internal `delta_deviance_snp`) now returns `NA` instead of stopping when an "impossible" case is encountered (when the genotype `x` is non-zero but the fitted probabilities under either null or alternative model are zero, or the alternative allele dosage (`x-2`) has the same problem).
-  These cases are clearly model fitting failures, and can arise for common ill-defined problems, particularly under binary `adjustment` variables passed to `gcat` together with rare variants; these individual cases are not handled any better by `stats:glm`, so it seemed most sensible to return `NA` at such loci and not stop.
+  These cases are clearly model fitting failures, and can arise for common ill-defined problems, particularly under binary `adjustment` variables passed to `gcat` together with rare variants; these individual cases are not handled any better by `stats::glm`, so it seemed most sensible to return `NA` at such loci and not stop.
+
+# 2021-05-11 - gcatest 2.0.3.9000
+
+- Added function `delta_deviance_lf`, which calculates the delta deviance from two logistic models and the genotype matrix data.
+  This function is a more general version of `gcat.stat` (which uses the new function internally), to essentially consider models that differ by more than one degree of freedom.
+  It was written in particular for an external application in mind, namely the `jackstraw` package.
+- Internal function `assoc_snp` was renamed to `delta_deviance_snp_lf` and its last argument changed to match that of `delta_deviance_lf` (alternative logistic factors instead of trait).
