@@ -187,12 +187,25 @@ test_that("delta_deviance_snp_lf works", {
         devdiff_glm <- delta_deviance_snp_glm( X[ i, ], LFs, trait )
     )
     expect_equal( devdiff, devdiff_glm )
+
+    # test a case for `jackstraw`, where the null is actually no LFs (just intercept)
+    # an earlier version of the code failed here because LF0 was a column matrix
+    LF0 <- matrix( 1, nrow = n_ind, ncol = 1 )
+    # NOTE here LFs is the alternative, not the null
+    expect_silent(
+        devdiff <- delta_deviance_snp_lf( X[ i, ] , LF0, LFs )
+    )
+    expect_equal( length( devdiff ), 1 )
+    expect_true( is.numeric( devdiff ) )
+    # delta deviances can be NA if LFA/glm.fit fail to converge
+    expect_true( !is.na( devdiff ) )
+    expect_true( devdiff >= 0 )
 })
 
 test_that("delta_deviance_lf works", {
     LF1 <- cbind(LFs, trait)
     expect_silent(
-        devdiff <- delta_deviance_lf( X , LFs, LF1 )
+        devdiff <- delta_deviance_lf( X, LFs, LF1 )
     )
     expect_equal( length( devdiff ), m_loci )
     expect_true( is.numeric( devdiff ) )
@@ -209,6 +222,20 @@ test_that("delta_deviance_lf works", {
         )
     }
     expect_equal( devdiff, devdiff_glm )
+
+    # test a case for `jackstraw`, where the null is actually no LFs (just intercept)
+    # an earlier version of the code failed here because LF0 was a column matrix
+    LF0 <- matrix( 1, nrow = n_ind, ncol = 1 )
+    # NOTE here LFs is the alternative, not the null
+    expect_silent(
+        devdiff <- delta_deviance_lf( X, LF0, LFs )
+    )
+    expect_equal( length( devdiff ), m_loci )
+    expect_true( is.numeric( devdiff ) )
+    # delta deviances can be NA if LFA/glm.fit fail to converge
+    expect_true( !any( is.na( devdiff ) ) )
+    # theoretically this is true, but in practice it depends on LFA fitting these models well, so testing this is not appropriate here (fails sometimes)
+    ## expect_true( all( devdiff >= 0 ) )
 })
 
 test_that("gcat.stat works", {

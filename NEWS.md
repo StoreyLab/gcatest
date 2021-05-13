@@ -41,3 +41,9 @@ Internally there was major code restructuring, and added unit tests for all func
   This function is a more general version of `gcat.stat` (which uses the new function internally), to essentially consider models that differ by more than one degree of freedom.
   It was written in particular for an external application in mind, namely the `jackstraw` package.
 - Internal function `assoc_snp` was renamed to `delta_deviance_snp_lf` and its last argument changed to match that of `delta_deviance_lf` (alternative logistic factors instead of trait).
+
+# 2021-05-13 - gcatest 2.0.4.9000
+
+- Function `delta_deviance_lf` debugged case where either `LF0` or `LF1` is a column matrix.
+  Previously these 1-column matrices were getting dropped to a vector incorrectly, which resulted in the mysterious error message "Error: argument is of length zero".
+  This 1-column case is not typically observed in `gcatest`, but is common in the reverse-dependent `jackstraw` package.

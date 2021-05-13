@@ -23,6 +23,15 @@ delta_deviance_lf <- function( X, LF0, LF1 ){
     if ( missing( LF1 ) )
         stop( "`LF1` matrix is required!" )
     
+    # nothing can be null either
+    # (catches problems in `jackstraw`, where the default LF0 is NULL, but its defaults and `gcatest`'s are different and it's better not to assume anything)
+    if ( is.null( X ) )
+        stop( '`X` cannot be null!' )
+    if ( is.null( LF0 ) )
+        stop( '`LF0` cannot be null!' )
+    if ( is.null( LF1 ) )
+        stop( '`LF1` cannot be null!' )
+    
     # check class
     is_BEDMatrix <- FALSE
     if ( "BEDMatrix" %in% class(X) ) {
