@@ -14,8 +14,6 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{bm}
-\usepackage{bbm}
-\usepackage{enumerate}
 \usepackage[font=small,format=plain,labelfont=bf,up,textfont=up]{caption}
 \usepackage{hyperref}
 \usepackage{subfig}
@@ -29,17 +27,27 @@
 
 \section{Introduction}
 
-The \texttt{gcatest} package provides an implementation of the Genotype Conditional Association Test (GCAT)~\cite{Song2015}.
-GCAT is a test for genetic association that is powered by Logistic Factor Analysis (LFA)~\cite{Hao2013}. 
-LFA is a method of modeling population structure in a genome wide association study. GCAT performs a test for association between each SNP and a trait (either quantitative or binary).
+The \texttt{gcatest} package provides an implementation of the Genotype 
+Conditional Association Test (GCAT)~\cite{song_testing_2015}.
+GCAT is a test for genetic association that is powered by Logistic Factor 
+Analysis (LFA)~\cite{hao_probabilistic_2016}. 
+LFA is a method of modeling population structure in a genome wide association 
+study. GCAT performs a test for association between each SNP and a trait (either
+quantitative or binary).
 We have shown that GCAT is robust to confounding from population structure.
 
 \section{Sample usage}
 
-We include a sample dataset with the package. \texttt{sim\_geno} is a simulated genotype matrix. \texttt{sim\_trait} is a simulated trait. 
-There are 10,000 SNPs and 1,000 individuals. The first five SNPs are associated with the trait. 
-This simulations were done under the Pritchard-Stephens-Donnelly model with $K=3$, with Dirichlet parameter $\alpha=0.1$ and variance allotment in the trait corresponding to $5\%$ genetic, $5\%$ environmental, and $90\%$ noise. 
-This dataset is simulated under identical parameters as the PSD simulation in Figure 2 of the paper~\cite{Song2015}, except that we have adjusted the size of the simulation to be appropriate for a small demo.
+We include a sample dataset with the package. \texttt{sim\_geno} is a simulated
+genotype matrix. \texttt{sim\_trait} is a simulated trait. 
+There are 10,000 SNPs and 1,000 individuals. The first five SNPs are associated
+with the trait. 
+This simulations were done under the Pritchard-Stephens-Donnelly model with
+$K=3$, with Dirichlet parameter $\alpha=0.1$ and variance allotment in the trait
+corresponding to $5\%$ genetic, $5\%$ environmental, and $90\%$ noise. 
+This dataset is simulated under identical parameters as the PSD simulation in
+Figure 2 of the paper~\cite{song_testing_2015}, except that we have adjusted the
+size of the simulation to be appropriate for a small demo.
 
 <<preamble,warning=F>>=
 library(lfa)
@@ -53,14 +61,14 @@ length(sim_trait)
 The first step of \texttt{gcat} is to estimate the logistic factors:
 
 <<lfa>>=
-LF = lfa(sim_geno, 3)
+LF <- lfa(sim_geno, 3)
 dim(LF)
 @
 
 Then, we call the \texttt{gcat} function, which returns a vector of p-values:
 
 <<gcat>>=
-gcat_p = gcat(sim_geno, LF, sim_trait)
+gcat_p <- gcat(sim_geno, LF, sim_trait)
 @
 
 We can look at the p-values for the associated SNPs:
@@ -73,14 +81,17 @@ And also plot the histogram of the unassociated SNPs:
 
 <<fig1, fig.height=3>>=
 library(ggplot2)
-dat = data.frame(gcat_p[6:10000])
-colnames(dat) = "gcat_p"
-ggplot(dat, aes(gcat_p, ..density..)) + geom_histogram(binwidth=1/20) + theme_bw()
+dat <- data.frame(p = gcat_p[6:10000])
+ggplot(dat, aes(p, ..density..)) + geom_histogram(binwidth=1/20) + theme_bw()
 @
 
 \section{Data Input}
 
-The \texttt{lfa} package provides the function \texttt{read.bed} for parsing PLINK binary genotypes (extension: \texttt{.bed}) into an R object of the format needed for the \texttt{gcat} function.
+The \texttt{genio} package provides the function \texttt{read\_plink} for 
+parsing PLINK binary genotypes (extension: \texttt{.bed}) into an R object of
+the format needed for the \texttt{gcat} function.
+A \texttt{BEDMatrix} object (from the eponymous function and package) is also 
+supported, and can result in reduced memory usage (at a small runtime penalty).
 
 \bibliographystyle{plain}
 \bibliography{gcatest}
