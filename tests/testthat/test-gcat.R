@@ -48,14 +48,14 @@ trait <- rnorm( n_ind )
 # we must use `suppressWarnings`, otherwise these warnings show up as testing errors
 
 # this function is not used in practice, but is kept for accuracy checks
-test_that( "deviance_snp works", {
+test_that( ".deviance_snp works", {
     # first draw completely random data
     # OLD: do not use X because we can't have missingness here.
     # NEW: missingness is handled by all functions!!!
     pi <- runif( n_ind )
     xi <- rbinom( n_ind, 2, pi)
     expect_silent(
-        dev <- deviance_snp( xi, pi )
+        dev <- .deviance_snp( xi, pi )
     )
     expect_equal( length( dev ), 1 )
     expect_true( is.numeric( dev ) )
@@ -67,7 +67,7 @@ test_that( "deviance_snp works", {
     pi[n_ind] <- 1
     xi <- rbinom( n_ind, 2, pi)
     expect_silent(
-        dev <- deviance_snp( xi, pi )
+        dev <- .deviance_snp( xi, pi )
     )
     expect_equal( length( dev ), 1 )
     expect_true( is.numeric( dev ) )
@@ -76,14 +76,14 @@ test_that( "deviance_snp works", {
 
     # direct comparison to `glm`
     suppressWarnings(
-        dev_glm <- deviance_snp_glm(xi, LFs)
+        dev_glm <- .deviance_snp_glm(xi, LFs)
     )
     # replicate fit with our code, needs two stages (pi's must be fit from LFs)
     pi_fit <- lfa::af_snp(
                        xi,
                        LFs
                    )
-    dev <- deviance_snp( xi, pi_fit )
+    dev <- .deviance_snp( xi, pi_fit )
     expect_equal( dev, dev_glm )
 
     # now test all loci, for complete assurance
@@ -94,16 +94,16 @@ test_that( "deviance_snp works", {
         xi <- X[ i, ]
         # direct comparison to `glm`
         suppressWarnings(
-            dev_glm[i] <- deviance_snp_glm( xi, LFs )
+            dev_glm[i] <- .deviance_snp_glm( xi, LFs )
         )
         # replicate fit with our code, needs two stages (pi's must be fit from LFs)
         pi_fit <- lfa::af_snp( xi, LFs )
-        dev[i] <- deviance_snp( xi, pi_fit )
+        dev[i] <- .deviance_snp( xi, pi_fit )
     }
     expect_equal( dev, dev_glm )
 })
 
-test_that( "delta_deviance_snp works", {
+test_that( ".delta_deviance_snp works", {
     # first draw completely random data
     # do not use X because we can't have missingness here
     # true allele frequencies
@@ -115,19 +115,19 @@ test_that( "delta_deviance_snp works", {
     p1 <- lfa::af_snp( xi, cbind(LFs, trait) )
 
     expect_silent(
-        devdiff <- delta_deviance_snp( xi, p0, p1 )
+        devdiff <- .delta_deviance_snp( xi, p0, p1 )
     )
     expect_equal( length( devdiff ), 1 )
     expect_true( is.numeric( devdiff ) )
     expect_true( !is.na( devdiff ) )
     expect_true( devdiff >= 0 ) # can fail because models are not always fit well by LFA
     # also compare to less numerically-stable but otherwise identical calculation
-    devdiff2 <- deviance_snp( xi, p0 ) - deviance_snp( xi, p1 )
+    devdiff2 <- .deviance_snp( xi, p0 ) - .deviance_snp( xi, p1 )
     expect_equal( devdiff, devdiff2 )
 
     # direct comparison to `glm`
     suppressWarnings(
-        devdiff_glm <- delta_deviance_snp_glm( xi, LFs, trait )
+        devdiff_glm <- .delta_deviance_snp_glm( xi, LFs, trait )
     )
     expect_equal( devdiff, devdiff_glm )
     
@@ -142,14 +142,14 @@ test_that( "delta_deviance_snp works", {
     p0[1] <- 0
     p1[n_ind] <- 1
     expect_silent(
-        devdiff <- delta_deviance_snp( xi, p0, p1 )
+        devdiff <- .delta_deviance_snp( xi, p0, p1 )
     )
     expect_equal( length( devdiff ), 1 )
     expect_true( is.numeric( devdiff ) )
     expect_true( !is.na( devdiff ) )
     # expect_true( devdiff >= 0 ) # can fail because models are not always fit well by LFA (seems especially bad in these artificially bad cases)
     # also compare to less numerically-stable but otherwise identical calculation
-    devdiff2 <- deviance_snp( xi, p0 ) - deviance_snp( xi, p1 )
+    devdiff2 <- .deviance_snp( xi, p0 ) - .deviance_snp( xi, p1 )
     expect_equal( devdiff, devdiff2 )
 
     # NOTE: because these trouble cases were not obtained from direct fit from LFs (they were hacked into the resulting pi estimates), then no direct `glm` comparison is possible here
@@ -163,18 +163,18 @@ test_that( "delta_deviance_snp works", {
     pi_bad2 <- pi
     pi_bad2[3] <- 0 # can't have this if data was xi[1] == 2
     # test in all combinations
-    expect_true( is.na( delta_deviance_snp( xi, pi_bad1, pi ) ) )
-    expect_true( is.na( delta_deviance_snp( xi, pi_bad2, pi ) ) )
-    expect_true( is.na( delta_deviance_snp( xi, pi, pi_bad1 ) ) )
-    expect_true( is.na( delta_deviance_snp( xi, pi, pi_bad2 ) ) )
+    expect_true( is.na( .delta_deviance_snp( xi, pi_bad1, pi ) ) )
+    expect_true( is.na( .delta_deviance_snp( xi, pi_bad2, pi ) ) )
+    expect_true( is.na( .delta_deviance_snp( xi, pi, pi_bad1 ) ) )
+    expect_true( is.na( .delta_deviance_snp( xi, pi, pi_bad2 ) ) )
 })
 
-test_that("delta_deviance_snp_lf works", {
+test_that(".delta_deviance_snp_lf works", {
     # test a single SNP
     i <- 1
     LF1 <- cbind(LFs, trait)
     expect_silent(
-        devdiff <- delta_deviance_snp_lf( X[ i, ] , LFs, LF1 )
+        devdiff <- .delta_deviance_snp_lf( X[ i, ] , LFs, LF1 )
     )
     expect_equal( length( devdiff ), 1 )
     expect_true( is.numeric( devdiff ) )
@@ -184,7 +184,7 @@ test_that("delta_deviance_snp_lf works", {
 
     # direct comparison to `glm`
     suppressWarnings(
-        devdiff_glm <- delta_deviance_snp_glm( X[ i, ], LFs, trait )
+        devdiff_glm <- .delta_deviance_snp_glm( X[ i, ], LFs, trait )
     )
     expect_equal( devdiff, devdiff_glm )
 
@@ -193,7 +193,7 @@ test_that("delta_deviance_snp_lf works", {
     LF0 <- matrix( 1, nrow = n_ind, ncol = 1 )
     # NOTE here LFs is the alternative, not the null
     expect_silent(
-        devdiff <- delta_deviance_snp_lf( X[ i, ] , LF0, LFs )
+        devdiff <- .delta_deviance_snp_lf( X[ i, ] , LF0, LFs )
     )
     expect_equal( length( devdiff ), 1 )
     expect_true( is.numeric( devdiff ) )
@@ -218,7 +218,7 @@ test_that("delta_deviance_lf works", {
     devdiff_glm <- vector( 'numeric', m_loci )
     for ( i in 1 : m_loci ) {
         suppressWarnings(
-            devdiff_glm[i] <- delta_deviance_snp_glm( X[ i, ], LFs, trait )
+            devdiff_glm[i] <- .delta_deviance_snp_glm( X[ i, ], LFs, trait )
         )
     }
     expect_equal( devdiff, devdiff_glm )
@@ -253,7 +253,7 @@ test_that("gcat.stat works", {
     devdiff_glm <- vector( 'numeric', m_loci )
     for ( i in 1 : m_loci ) {
         suppressWarnings(
-            devdiff_glm[i] <- delta_deviance_snp_glm( X[ i, ], LFs, trait )
+            devdiff_glm[i] <- .delta_deviance_snp_glm( X[ i, ], LFs, trait )
         )
     }
     expect_equal( devdiff, devdiff_glm )

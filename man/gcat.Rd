@@ -18,7 +18,7 @@ gcat.stat(X, LF, trait, adjustment = NULL)
 BEDMatrix is supported.
 Sparse matrices of class Matrix are not supported (yet).}
 
-\item{LF}{matrix of logistic factors outputed from function \code{\link[lfa:lfa]{lfa::lfa()}}}
+\item{LF}{matrix of logistic factors from \code{\link[lfa:lfa]{lfa::lfa()}}}
 
 \item{trait}{vector}
 
@@ -28,7 +28,8 @@ Sparse matrices of class Matrix are not supported (yet).}
 vector of p-values
 }
 \description{
-Performs the GCAT test for association between SNPs and trait, and returns the p-values.
+Performs the GCAT association test between SNPs and trait, returning
+p-values.
 }
 \section{Functions}{
 \itemize{
@@ -53,5 +54,6 @@ gcat_p <- gcat(sim_geno, LF, sim_trait)
 gcat_stat <- gcat.stat(sim_geno, LF, sim_trait)
 }
 \references{
-Song, M, Hao, W, Storey, JD (2015). Testing for genetic associations in arbitrarily structured populations. Nat. Genet., 47, 5:550-4.
+Song, M, Hao, W, Storey, JD (2015). Testing for genetic
+associations in arbitrarily structured populations. Nat. Genet., 47, 5:550-4.
 }

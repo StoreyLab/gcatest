@@ -1,15 +1,33 @@
 Package: gcatest
 Title: Genotype Conditional Association TEST
-Version: 2.0.4.9000
-Author: Wei Hao, Minsun Song, Alejandro Ochoa, John D. Storey
-Maintainer: Alejandro Ochoa <alejandro.ochoa@duke.edu>, Wei Hao <whao@princeton.edu>, John D. Storey <jstorey@princeton.edu>
+Version: 2.0.5
+Authors@R: c(
+    person(given = "Wei",
+	   family = "Hao",
+	   role = "aut",
+	   email = "whao@princeton.edu"),
+    person(given = "Minsun",
+	   family = "Song",
+	   role = "aut"),
+    person(given = "Alejandro",
+	   family = "Ochoa",
+	   role = c("aut", "cre"),
+	   email = "alejandro.ochoa@duke.edu",
+           comment = c(ORCID = "0000-0003-4928-3403")),
+    person(given = "John D.",
+           family = "Storey",
+	   role = "aut",
+	   email = "jstorey@princeton.edu",
+           comment = c(ORCID = "0000-0001-5992-402X"))
+    )
 Encoding: UTF-8
 LazyData: true
-Description: GCAT is an association test for genome wide association studies that controls for population structure under a general class of trait models. 
+Description: GCAT is an association test for genome wide association studies that controls for population structure under a general class of trait models.  This test conditions on the trait, which makes it immune to confounding by unmodeled environmental factors.  Population structure is modeled via logistic factors, which are estimated using the `lfa` package.
 Imports:
+    methods,
     lfa
 Depends:
-    R (>= 3.2)
+    R (>= 4.0)
 Suggests:
     knitr,
     ggplot2,
@@ -17,7 +35,7 @@ Suggests:
     BEDMatrix,
     genio
 VignetteBuilder: knitr
-License: GPL-3
+License: GPL (>= 3)
 biocViews: SNP, DimensionReduction, PrincipalComponent, GenomeWideAssociation
 BugReports: https://github.com/StoreyLab/gcatest/issues
 URL: https://github.com/StoreyLab/gcatest

@@ -2,7 +2,7 @@
 % Please edit documentation in R/delta_deviance_lf.R
 \name{delta_deviance_lf}
 \alias{delta_deviance_lf}
-\title{Calculate delta deviance of logistic fits of a null and alternative model}
+\title{Calculate delta deviance of logistic null/alternative models}
 \usage{
 delta_deviance_lf(X, LF0, LF1)
 }
@@ -20,12 +20,33 @@ Sparse matrices of class Matrix are not supported (yet).}
 The vector of delta deviance values, one per locus of \code{X}.
 }
 \description{
-This function fits, at each locus of a given genotype matrix, two logistic models, and under the assumption that the models are nested, calculates the delta deviance between the two.
-This general function is intended for testing models in a broad setting; for the specific problem of genetic association, the interface in \code{\link[=gcat]{gcat()}} and \code{\link[=gcat.stat]{gcat.stat()}} are more user-friendly.
+This function fits, at each locus of a given genotype matrix, two logistic
+models, and under the assumption that the models are nested, calculates the
+delta deviance between the two.
+This general function is intended for testing models in a broad setting; for
+the specific problem of genetic association, the interface in
+\code{\link[=gcat]{gcat()}} and
+\code{\link[=gcat.stat]{gcat.stat()}} are more user-friendly.
 }
 \examples{
-\dontrun{
-devdiff <- delta_deviance_lf( X, LF0, LF1 )
-}
+library(lfa)
+
+# make example data smaller so example is fast
+# goes from 1000 to 100 individuals
+indexes <- sample.int( ncol(sim_geno), 100 )
+sim_geno <- sim_geno[ , indexes ]
+sim_trait <- sim_trait[ indexes ]
+
+# now run LFA and get delta deviances for trait assoc
+# (recapitulating `gcat.stat` in this case)
+LF <- lfa(sim_geno, 3)
+LF0 <- LF # structure is null
+LF1 <- cbind(LF, sim_trait) # trait is alt
+devdiff_assoc <- delta_deviance_lf(sim_geno, LF0, LF1)
+
+# can instead do delta deviances for structure only
+LF0 <- cbind(rep.int(1, ncol(sim_geno))) # intercept only is null
+LF1 <- LF # structure is alt, no trait
+devdiff_struc <- delta_deviance_lf(sim_geno, LF0, LF1)
 
 }
