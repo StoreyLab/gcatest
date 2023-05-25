@@ -33,12 +33,12 @@ p-values.
 }
 \section{Functions}{
 \itemize{
-\item \code{gcatest}: Alias of gcat
+\item \code{gcatest()}: Alias of gcat
 
-\item \code{gcat.stat}: returns the association statistics instead of the
+\item \code{gcat.stat()}: returns the association statistics instead of the
 p-value.
-}}
 
+}}
 \examples{
 library(lfa)
 

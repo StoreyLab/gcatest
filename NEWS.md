@@ -68,3 +68,8 @@ Internally there was major code restructuring, and added unit tests for all func
     - All unexported functions are now prefixed with a period.
     - Replaced `1:x` with `seq_len(x)` several functions.
     - Reformatted all code with package `reformatR` and otherwise match Bioconductor guidelines.
+
+# gcatest 2.0.6 (2023-05-25)
+
+- `README.md` upgraded links from http to https
+- Minor doc reformatting automatically performed by `roxygen2`.

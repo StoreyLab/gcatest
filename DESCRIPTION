@@ -1,6 +1,6 @@
 Package: gcatest
 Title: Genotype Conditional Association TEST
-Version: 2.0.5
+Version: 2.0.6
 Authors@R: c(
     person(given = "Wei",
 	   family = "Hao",
@@ -40,4 +40,4 @@ biocViews: SNP, DimensionReduction, PrincipalComponent, GenomeWideAssociation
 BugReports: https://github.com/StoreyLab/gcatest/issues
 URL: https://github.com/StoreyLab/gcatest
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3

@@ -33,9 +33,9 @@ gcat_p <- gcat(sim_geno, LF, sim_trait)
 
 The example is also available in PLINK format at:
 
-* http://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.bed
-* http://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.bim
-* http://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.fam
+* https://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.bed
+* https://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.bim
+* https://genomics.princeton.edu/storeylab/data/gcat/demo/sim_geno.fam
 
 The package `genio` has the function `read_plink` to read this data.
 Example:
@@ -75,5 +75,5 @@ gcat_p <- gcat(sim_geno, LF, sim_trait)
 
 Song, Minsun, Wei Hao, and John D. Storey. "Testing for Genetic Associations in Arbitrarily Structured Populations." Nature Genetics 47, no. 5 (May 2015): 550-54. [doi:10.1038/ng.3244](https://doi.org/10.1038/ng.3244).
 
-Hao, Wei, Minsun Song, and John D. Storey. "Probabilistic Models of Genetic Variation in Structured Populations Applied to Global Human Studies." Bioinformatics 32, no. 5 (March 1, 2016): 713–21. [doi:10.1093/bioinformatics/btv641](https://doi.org/10.1093/bioinformatics/btv641). [arXiv](http://arxiv.org/abs/1312.2041).
+Hao, Wei, Minsun Song, and John D. Storey. "Probabilistic Models of Genetic Variation in Structured Populations Applied to Global Human Studies." Bioinformatics 32, no. 5 (March 1, 2016): 713–21. [doi:10.1093/bioinformatics/btv641](https://doi.org/10.1093/bioinformatics/btv641). [arXiv](https://arxiv.org/abs/1312.2041).
 
