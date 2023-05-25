@@ -73,3 +73,7 @@ Internally there was major code restructuring, and added unit tests for all func
 
 - `README.md` upgraded links from http to https
 - Minor doc reformatting automatically performed by `roxygen2`.
+
+# gcatest 2.1.6 (2023-05-25)
+
+- Version bump for bioconductor devel.
