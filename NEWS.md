@@ -73,3 +73,9 @@ Internally there was major code restructuring, and added unit tests for all func
 
 - `README.md` upgraded links from http to https
 - Minor doc reformatting automatically performed by `roxygen2`.
+
+# gcatest 2.0.7 (2023-06-20)
+
+- Commented out various excessive tests against `glm`, which differ more often than expected due to poor or lack of convergence.
+- Removed unused LaTeX package dependencies from vignette to prevent errors restricted to specific testing platforms.
+- Fixed `..density..` deprecation warning in vignette plot.

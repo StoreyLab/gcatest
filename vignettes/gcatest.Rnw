@@ -3,20 +3,8 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{gcat Package}
 
-\usepackage{tikz}
-\usepackage{float}
-\usepackage{gensymb}
-\usepackage{times}
-\usepackage{graphicx}
-\usepackage{url}
 \usepackage{fullpage}
-\usepackage{float}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{bm}
-\usepackage[font=small,format=plain,labelfont=bf,up,textfont=up]{caption}
 \usepackage{hyperref}
-\usepackage{subfig}
 
 \title{Genotype Conditional Association Test Vignette}
 \author{Wei Hao, Minsun Song, John D. Storey}
@@ -82,7 +70,7 @@ And also plot the histogram of the unassociated SNPs:
 <<fig1, fig.height=3>>=
 library(ggplot2)
 dat <- data.frame(p = gcat_p[6:10000])
-ggplot(dat, aes(p, ..density..)) + geom_histogram(binwidth=1/20) + theme_bw()
+ggplot(dat, aes(p, after_stat(density))) + geom_histogram(binwidth=1/20) + theme_bw()
 @
 
 \section{Data Input}
