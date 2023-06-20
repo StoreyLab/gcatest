@@ -77,3 +77,9 @@ Internally there was major code restructuring, and added unit tests for all func
 # gcatest 2.1.6 (2023-05-25)
 
 - Version bump for bioconductor devel.
+
+# gcatest 2.1.7 (2023-06-20)
+
+- Commented out various excessive tests against `glm`, which differ more often than expected due to poor or lack of convergence.
+- Removed unused LaTeX package dependencies from vignette to prevent errors restricted to specific testing platforms.
+- Fixed `..density..` deprecation warning in vignette plot.
