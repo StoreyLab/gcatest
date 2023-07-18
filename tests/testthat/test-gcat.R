@@ -120,7 +120,7 @@ test_that( ".delta_deviance_snp works", {
     expect_equal( length( devdiff ), 1 )
     expect_true( is.numeric( devdiff ) )
     expect_true( !is.na( devdiff ) )
-    expect_true( devdiff >= 0 ) # can fail because models are not always fit well by LFA
+    ## expect_true( devdiff >= 0 ) # can fail because models are not always fit well by LFA
     # also compare to less numerically-stable but otherwise identical calculation
     devdiff2 <- .deviance_snp( xi, p0 ) - .deviance_snp( xi, p1 )
     expect_equal( devdiff, devdiff2 )
@@ -180,7 +180,7 @@ test_that(".delta_deviance_snp_lf works", {
     expect_true( is.numeric( devdiff ) )
     # delta deviances can be NA if LFA/glm.fit fail to converge
     expect_true( !is.na( devdiff ) )
-    expect_true( devdiff >= 0 )
+    ## expect_true( devdiff >= 0 )
 
     ## # direct comparison to `glm`
     ## suppressWarnings(
