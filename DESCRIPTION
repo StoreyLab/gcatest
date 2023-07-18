@@ -1,6 +1,6 @@
 Package: gcatest
 Title: Genotype Conditional Association TEST
-Version: 2.1.7
+Version: 2.1.8
 Authors@R: c(
     person(given = "Wei",
 	   family = "Hao",

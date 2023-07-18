@@ -83,3 +83,8 @@ Internally there was major code restructuring, and added unit tests for all func
 - Commented out various excessive tests against `glm`, which differ more often than expected due to poor or lack of convergence.
 - Removed unused LaTeX package dependencies from vignette to prevent errors restricted to specific testing platforms.
 - Fixed `..density..` deprecation warning in vignette plot.
+
+# gcatest 2.1.8 (2023-07-18)
+
+- Commented out two more strict tests (for non-negative deviances) that fail too often on bioconductor.
+
