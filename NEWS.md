@@ -88,3 +88,6 @@ Internally there was major code restructuring, and added unit tests for all func
 
 - Commented out two more strict tests (for non-negative deviances) that fail too often on bioconductor.
 
+# gcatest 2.1.9 (2023-07-26)
+
+- Commented out one more strict test (NA deviances) that fail too often on bioconductor.
