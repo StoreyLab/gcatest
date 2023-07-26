@@ -234,7 +234,7 @@ test_that("delta_deviance_lf works", {
     expect_equal( length( devdiff ), m_loci )
     expect_true( is.numeric( devdiff ) )
     # delta deviances can be NA if LFA/glm.fit fail to converge
-    expect_true( !any( is.na( devdiff ) ) )
+    #expect_true( !any( is.na( devdiff ) ) )
     # theoretically this is true, but in practice it depends on LFA fitting these models well, so testing this is not appropriate here (fails sometimes)
     ## expect_true( all( devdiff >= 0 ) )
 })
