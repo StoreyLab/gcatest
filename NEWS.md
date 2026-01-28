@@ -91,3 +91,7 @@ Internally there was major code restructuring, and added unit tests for all func
 # gcatest 2.1.9 (2023-07-26)
 
 - Commented out one more strict test (NA deviances) that fail too often on bioconductor.
+
+# gcatest 2.11.1 (2026-01-28)
+
+- Updated vignette from old Sweave to modern R markdown.
